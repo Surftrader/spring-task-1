@@ -1,6 +1,7 @@
 package ua.com.poseal.todo.services;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.core.io.ClassPathResource;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import org.springframework.web.server.ResponseStatusException;
@@ -13,8 +14,10 @@ import javax.annotation.PostConstruct;
 import javax.validation.ConstraintViolation;
 import javax.validation.Validator;
 import java.io.BufferedReader;
-import java.io.FileReader;
 import java.io.IOException;
+import java.io.InputStream;
+import java.io.InputStreamReader;
+import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
@@ -89,8 +92,8 @@ public class UserService {
     @PostConstruct
     private void initUsersFromCSV() {
         List<User> usersList = new ArrayList<>();
-        try (BufferedReader reader = new BufferedReader(
-                new FileReader(USERS_CSV))) {
+        try (InputStream resource = new ClassPathResource(USERS_CSV).getInputStream();
+             BufferedReader reader = new BufferedReader(new InputStreamReader(resource, StandardCharsets.UTF_8))) {
             String line;
             while ((line = reader.readLine()) != null) {
                 String[] usersString = line.split(";");
