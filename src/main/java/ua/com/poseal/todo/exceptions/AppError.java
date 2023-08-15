@@ -28,4 +28,12 @@ public class AppError {
     public void setMessage(String message) {
         this.message = message;
     }
+
+    @Override
+    public String toString() {
+        return "AppError{" +
+                "statusCode=" + statusCode +
+                ", message='" + message + '\'' +
+                '}';
+    }
 }

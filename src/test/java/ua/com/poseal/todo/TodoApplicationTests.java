@@ -4,9 +4,12 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.core.io.ClassPathResource;
 import org.springframework.test.context.junit4.SpringRunner;
+import org.springframework.test.web.servlet.MockMvc;
 import ua.com.poseal.todo.domain.User;
 import ua.com.poseal.todo.repositories.UserRepository;
 
@@ -23,20 +26,25 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 import static ua.com.poseal.todo.TodoApplication.logger;
 
 //@ExtendWith(SpringRunner.class)
-@SpringBootTest
+//@SpringBootTest
+//@AutoConfigureMockMvc
+//@Import(FlightBuilder.class)
 class TodoApplicationTests {
-	private static final String USERS_CSV = "users_information.csv";
+//	private static final String USERS_CSV = "users_information.csv";
 
 	@Autowired
-	UserRepository repository;
-	@Test
-	void contextLoads() throws Exception {
-	}
+	private MockMvc mvc;
 
-	@BeforeEach
-	void setup() {
-//		initUsersFromCSV();
-	}
+	@MockBean
+	UserRepository repository;
+//	@Test
+//	void contextLoads() throws Exception {
+//	}
+//
+//	@BeforeEach
+//	void setup() {
+////		initUsersFromCSV();
+//	}
 //	@PostConstruct
 //	private void initUsersFromCSV() {
 //		List<User> usersList = new ArrayList<>();
