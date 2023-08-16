@@ -5,7 +5,6 @@ import ua.com.poseal.todo.util.IPNCheck;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
-import java.io.Serializable;
 
 @Entity
 @Table(name = "users")
@@ -71,28 +70,4 @@ public class User {
         this.ipn = ipn;
     }
 
-//    @Override
-//    public boolean equals(Object o) {
-//        if (this == o) return true;
-//        if (o == null || getClass() != o.getClass()) return false;
-//
-//        User user = (User) o;
-//
-//        return id.equals(user.id);
-//    }
-//
-//    @Override
-//    public int hashCode() {
-//        return id.hashCode();
-//    }
-
-    @Override
-    public String toString() {
-        return "User{" +
-                "id=" + id +
-                ", firstName='" + firstName + '\'' +
-                ", lastName='" + lastName + '\'' +
-                ", ipn='" + ipn + '\'' +
-                '}';
-    }
 }

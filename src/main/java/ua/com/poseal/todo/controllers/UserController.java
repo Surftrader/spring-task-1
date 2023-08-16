@@ -5,12 +5,9 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import ua.com.poseal.todo.domain.User;
-import ua.com.poseal.todo.exceptions.ResponseNotValidDataException;
-import ua.com.poseal.todo.exceptions.UserNotFoundException;
 import ua.com.poseal.todo.services.UserService;
 
 import javax.validation.Valid;
-import java.net.URI;
 import java.util.List;
 
 @RestController
@@ -38,26 +35,12 @@ public class UserController {
 
     @PostMapping
     public ResponseEntity<User> createUser(@RequestBody @Valid User user) {
-        User userFromDB = null;
-        URI uri = null;
-//        try {
-            userFromDB = service.createUser(user);
-            uri = URI.create("/users/" + userFromDB.getId());
-//        } catch (ResponseNotValidDataException e) {
-//            throw new ResponseNotValidDataException(e.getMessage());
-//        }
-        return ResponseEntity.created(uri).body(userFromDB);
+        User userFromDB = service.createUser(user);
+        return ResponseEntity.status(HttpStatus.CREATED).body(userFromDB);
     }
 
     @PutMapping("/{id}")
     public ResponseEntity<?> updateUser(@PathVariable Long id, @RequestBody @Valid User user) {
-//        User updatedUser;
-//        try {
-//            updatedUser = service.updateUser(id, user);
-//        } catch (UserNotFoundException e) {
-//            return ResponseEntity.notFound().build();
-//        }
-//        return ResponseEntity.ok(updatedUser);
         return ResponseEntity.ok(service.updateUser(id, user));
     }
 

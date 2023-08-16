@@ -4,22 +4,23 @@ import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
-import org.mockito.invocation.InvocationOnMock;
 import org.mockito.junit.jupiter.MockitoExtension;
-import org.mockito.stubbing.Answer;
-import org.springframework.boot.test.context.SpringBootTest;
+import ua.com.poseal.todo.AbstractTest;
 import ua.com.poseal.todo.domain.User;
 import ua.com.poseal.todo.repositories.UserRepository;
 
 import javax.validation.Validator;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Optional;
+import java.util.Set;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
-import static org.mockito.Mockito.*;
+import static org.mockito.Mockito.when;
 
 @ExtendWith(MockitoExtension.class)
-class UserServiceTest {
+class UserServiceTest extends AbstractTest {
     @Mock
     UserRepository userRepository;
     @InjectMocks
@@ -59,8 +60,7 @@ class UserServiceTest {
 
         when(validator.validate(validUser)).thenReturn(Set.of());
         when(userRepository.save(validUser)).thenReturn(validUser);
-        // add validUser to users
-        users.add(validUser); //???
+        users.add(validUser);
 
         User user = userService.createUser(validUser);
 
@@ -68,60 +68,5 @@ class UserServiceTest {
         assertEquals(4, users.size());
         assertEquals(users.get(users.size() - 1), user);
 
-    }
-
-//    @Test
-//    void shouldDeleteUserById() {
-//        List<User> users = getUsers();
-//        long id = 1L;
-//        doAnswer(
-//                invocation -> {
-//                    Object[] arguments = invocation.getArguments();
-//                    Object mock = invocation.getMock();
-//                    return "";
-//                }
-//        )
-//        .when(userRepository.deleteById(id));
-//
-//    }
-
-//
-//    @Test
-//    void findAll_ReturnsValidUsers() {
-//        // given
-//        when(repository.findAll()).thenReturn(users);
-//
-//        // when
-//        var userList = userService.findAll();
-//
-//        // then
-//        assertNotNull(userList);
-//        assertEquals(users, userList);
-//        verify(repository).findAll();
-//    }
-//
-//    @Test
-//    void findAll_ReturnsEmptyList() {
-//        ResponseStatusException exception = assertThrows(ResponseStatusException.class,
-//                () -> userService.findAll());
-//
-//        assertEquals(HttpStatus.NO_CONTENT + " " + "\"Empty data\"", exception.getMessage());
-//        assertEquals(HttpStatus.NO_CONTENT, exception.getStatus());
-//        verify(repository).findAll();
-//    }
-
-    private List<User> getUsers() {
-        return List.of(
-                new User(1L, "John", "Doe", "2732612837"),
-                new User(2L, "Tom", "Jerry", "2732612837"),
-                new User(3L, "Jack", "Nicholson", "2732612837")
-        );
-    }
-
-    private User getValidUser() {
-        return new User("John", "Doe", "2732612837");
-    }
-    private User getInvalidUser() {
-        return new User("John", "Doe", "2732612830");
     }
 }

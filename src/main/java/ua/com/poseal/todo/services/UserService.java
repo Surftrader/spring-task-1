@@ -16,8 +16,6 @@ import java.util.stream.Collectors;
 
 @Service
 public class UserService {
-
-    //    private static final String USERS_CSV = "users_information.csv";
     private final UserRepository repository;
     private final Validator validator;
 
@@ -47,16 +45,6 @@ public class UserService {
 
     public User updateUser(Long id, User user) {
         validateUser(user);
-        user.setId(id);
-//        User userFromDB = repository.findById(id).orElseThrow(
-//                () -> new UserNotFoundException(id));
-//
-//        userFromDB.setFirstName(user.getFirstName());
-//        userFromDB.setLastName(user.getLastName());
-//        userFromDB.setIpn(user.getIpn());
-//
-//        return repository.save(user);
-
         return repository.findById(id)
                 .map(u -> {
                     u.setFirstName(user.getFirstName());
@@ -86,26 +74,4 @@ public class UserService {
                 .map(ConstraintViolation::getMessage)
                 .collect(Collectors.joining(", "));
     }
-
-//    @PostConstruct
-//    private void initUsersFromCSV() {
-//        List<User> usersList = new ArrayList<>();
-//        try (InputStream resource = new ClassPathResource(USERS_CSV).getInputStream();
-//             BufferedReader reader = new BufferedReader(new InputStreamReader(resource, StandardCharsets.UTF_8))) {
-//            String line;
-//            while ((line = reader.readLine()) != null) {
-//                String[] usersString = line.split(";");
-//                usersList.add(
-//                        new User(Long.parseLong(
-//                                usersString[0].trim()),
-//                                usersString[1].trim(),
-//                                usersString[2].trim(),
-//                                usersString[3].trim())
-//                );
-//            }
-//        } catch (IOException ex) {
-//            logger.error("Error reading file {}", USERS_CSV, ex);
-//        }
-//        repository.saveAll(usersList);
-//    }
 }
