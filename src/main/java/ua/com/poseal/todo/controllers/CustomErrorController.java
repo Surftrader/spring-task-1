@@ -8,12 +8,15 @@ import org.springframework.web.bind.annotation.RestController;
 import ua.com.poseal.todo.exceptions.AppError;
 import ua.com.poseal.todo.exceptions.ErrorURLException;
 
+import static ua.com.poseal.todo.TodoApplication.logger;
+
 @RestController
 @RequestMapping("/error")
 public class CustomErrorController implements ErrorController {
 
     @GetMapping
     public ResponseEntity<AppError> handleError() {
+        logger.error("Wrong URL");
         throw new ErrorURLException("Wrong URL");
     }
 }
